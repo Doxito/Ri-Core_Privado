@@ -26,6 +26,7 @@
 #include "SystemConfig.h"
 #include "revision.h"
 #include "Util.h"
+#include "ArenaTeamMgr.h"
 
 bool ChatHandler::HandleHelpCommand(const char* args)
 {
@@ -156,4 +157,3 @@ bool ChatHandler::HandleServerMotdCommand(const char* /*args*/)
     PSendSysMessage(LANG_MOTD_CURRENT, sWorld->GetMotd());
     return true;
 }
-

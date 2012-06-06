@@ -3076,6 +3076,9 @@ void SpellMgr::LoadDbcDataCorrections()
             case 48246: // Ball of Flame
                 spellInfo->MaxAffectedTargets = 1;
                 break;
+            case 36384: // Skartax Purple Beam
+                spellInfo->MaxAffectedTargets = 2;
+                break;
             case 41376: // Spite
             case 39992: // Needle Spine
             case 29576: // Multi-Shot

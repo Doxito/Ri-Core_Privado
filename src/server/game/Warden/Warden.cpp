@@ -183,6 +183,7 @@ std::string Warden::Penalty(WardenCheck* check /*= NULL*/)
         break;
     case WARDEN_ACTION_BAN:
         {
+
            // std::string accountName;
          //  AccountMgr::GetName(_session->GetAccountId(), accountName);
   QueryResult resultSS = CharacterDatabase.PQuery("SELECT detectnum FROM ri_antihack WHERE nameacc=%u;", _session->GetAccountId());
@@ -199,7 +200,10 @@ std::string Warden::Penalty(WardenCheck* check /*= NULL*/)
             duration << sWorld->getIntConfig(CONFIG_WARDEN_CLIENT_BAN_DURATION_A) << "s";  
 			            
         std::stringstream banReason;
-            banReason << "Warden Anticheat Violation: " << check->Comment << " (CheckId: " << check->CheckId << ")";
+            banReason << "Warden Anticheat Violation";
+          // Check can be NULL, for example if the client sent a wrong signature in the warden packet (CHECKSUM FAIL)
+          if (check)
+               banReason << ": " << check->Comment << " (CheckId: " << check->CheckId << ")";
             sWorld->BanAccount(BAN_ACCOUNT, accountName, duration.str(), banReason.str(),"Server");}
             
  if(Positic == 2)
@@ -208,9 +212,11 @@ std::string Warden::Penalty(WardenCheck* check /*= NULL*/)
  CharacterDatabase.PExecute("REPLACE ri_antihack (nameacc,detectnum) VALUES (%u, '3');", _session->GetAccountId());
 		           std::stringstream duration;
             duration << sWorld->getIntConfig(CONFIG_WARDEN_CLIENT_BAN_DURATION_B) << "s";             
-
     std::stringstream banReason;
-            banReason << "Warden Anticheat Violation: " << check->Comment << " (CheckId: " << check->CheckId << ")";
+             banReason << "Warden Anticheat Violation";
+          // Check can be NULL, for example if the client sent a wrong signature in the warden packet (CHECKSUM FAIL)
+          if (check)
+               banReason << ": " << check->Comment << " (CheckId: " << check->CheckId << ")";
             sWorld->BanAccount(BAN_ACCOUNT, accountName, duration.str(), banReason.str(),"Server");}
   
  if(Positic == 3)
@@ -221,7 +227,10 @@ CharacterDatabase.PExecute("REPLACE ri_antihack (nameacc,detectnum) VALUES (%u, 
 		           std::stringstream duration;
             duration << sWorld->getIntConfig(CONFIG_WARDEN_CLIENT_BAN_DURATION_C) << "s";    
        std::stringstream banReason;
-            banReason << "Warden Anticheat Violation: " << check->Comment << " (CheckId: " << check->CheckId << ")";
+            banReason << "Warden Anticheat Violation";
+          // Check can be NULL, for example if the client sent a wrong signature in the warden packet (CHECKSUM FAIL)
+          if (check)
+               banReason << ": " << check->Comment << " (CheckId: " << check->CheckId << ")";
             sWorld->BanAccount(BAN_ACCOUNT, accountName, duration.str(), banReason.str(),"Server"); }             
           
          
@@ -232,7 +241,10 @@ CharacterDatabase.PExecute("REPLACE ri_antihack (nameacc,detectnum) VALUES (%u, 
 		           std::stringstream duration;
             duration << sWorld->getIntConfig(CONFIG_WARDEN_CLIENT_BAN_DURATION) << "s";      
               std::stringstream banReason;
-            banReason << "Warden Anticheat Violation: " << check->Comment << " (CheckId: " << check->CheckId << ")";
+            banReason << "Warden Anticheat Violation";
+          // Check can be NULL, for example if the client sent a wrong signature in the warden packet (CHECKSUM FAIL)
+          if (check)
+               banReason << ": " << check->Comment << " (CheckId: " << check->CheckId << ")";
             sWorld->BanAccount(BAN_ACCOUNT, accountName, duration.str(), banReason.str(),"Server");   
           }
             return "Ban";

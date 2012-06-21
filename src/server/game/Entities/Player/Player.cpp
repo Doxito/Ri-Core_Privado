@@ -12991,7 +12991,7 @@ void Player::DestroyItemCount(uint32 item, uint32 count, bool update, bool unequ
                 {
                     ItemRemovedQuestCheck(pItem->GetEntry(), count - remcount);
                     pItem->SetCount(pItem->GetCount() - count + remcount);
-                    if (IsInWorld() & update)
+                    if (IsInWorld() && update)
                         pItem->SendUpdateToPlayer(this);
                     pItem->SetState(ITEM_CHANGED, this);
                     return;
@@ -13019,7 +13019,7 @@ void Player::DestroyItemCount(uint32 item, uint32 count, bool update, bool unequ
                 {
                     ItemRemovedQuestCheck(pItem->GetEntry(), count - remcount);
                     pItem->SetCount(pItem->GetCount() - count + remcount);
-                    if (IsInWorld() & update)
+                    if (IsInWorld() && update)
                         pItem->SendUpdateToPlayer(this);
                     pItem->SetState(ITEM_CHANGED, this);
                     return;
@@ -13085,7 +13085,7 @@ void Player::DestroyItemCount(uint32 item, uint32 count, bool update, bool unequ
                 {
                     ItemRemovedQuestCheck(pItem->GetEntry(), count - remcount);
                     pItem->SetCount(pItem->GetCount() - count + remcount);
-                    if (IsInWorld() & update)
+                    if (IsInWorld() && update)
                         pItem->SendUpdateToPlayer(this);
                     pItem->SetState(ITEM_CHANGED, this);
                     return;
@@ -13193,7 +13193,7 @@ void Player::DestroyItemCount(Item* pItem, uint32 &count, bool update)
         ItemRemovedQuestCheck(pItem->GetEntry(), count);
         pItem->SetCount(pItem->GetCount() - count);
         count = 0;
-        if (IsInWorld() & update)
+        if (IsInWorld() && update)
             pItem->SendUpdateToPlayer(this);
         pItem->SetState(ITEM_CHANGED, this);
     }

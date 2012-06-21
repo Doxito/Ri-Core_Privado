@@ -158,6 +158,10 @@ class boss_bronjahm : public CreatureScript
                 if (!UpdateVictim())
                     return;
 
+               if (me->GetPositionZ() > 696 || me->GetPositionZ() < 685.2)
+				    EnterEvadeMode();
+
+
                 events.Update(diff);
 
                 if (me->HasUnitState(UNIT_STATE_CASTING))

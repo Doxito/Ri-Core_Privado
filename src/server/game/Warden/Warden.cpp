@@ -182,7 +182,7 @@ std::string Warden::Penalty(WardenCheck* check /*= NULL*/)
         return "Kick";
         break;
     case WARDEN_ACTION_BAN:
-        {
+		{
 
            // std::string accountName;
          //  AccountMgr::GetName(_session->GetAccountId(), accountName);
@@ -246,9 +246,10 @@ CharacterDatabase.PExecute("REPLACE ri_antihack (nameacc,detectnum) VALUES (%u, 
           if (check)
                banReason << ": " << check->Comment << " (CheckId: " << check->CheckId << ")";
             sWorld->BanAccount(BAN_ACCOUNT, accountName, duration.str(), banReason.str(),"Server");   
-          }
+		  }
             return "Ban";
-            break;
+
+            
 		}
     default:
         break;

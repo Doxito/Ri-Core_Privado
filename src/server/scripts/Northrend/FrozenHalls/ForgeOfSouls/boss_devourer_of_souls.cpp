@@ -219,13 +219,20 @@ class boss_devourer_of_souls : public CreatureScript
 
                 instance->SetData(DATA_DEVOURER_EVENT, DONE);
 
-                int32 entryIndex;
+              //  int32 entryIndex;
                 if (instance->GetData(DATA_TEAM_IN_INSTANCE) == ALLIANCE)
-                    entryIndex = 0;
-                else
+                   me->SummonCreature(NPC_JAINA_PART2, 5593.91f, 2420.685f, 705.85f, 0.9205f, TEMPSUMMON_DEAD_DESPAWN);
+				else
+                   me->SummonCreature(NPC_SYLVANAS_PART2, 5593.91f, 2420.685f, 705.85f, 0.9205f, TEMPSUMMON_DEAD_DESPAWN);
+					
+			
+					
+		/* 	
+				 	entryIndex = 0;
+                    else
                     entryIndex = 1;
 
-                for (int8 i = 0; outroPositions[i].entry[entryIndex] != 0; ++i)
+              for (int8 i = 0; outroPositions[i].entry[entryIndex] != 0; ++i)
                 {
                     if (Creature* summon = me->SummonCreature(outroPositions[i].entry[entryIndex], spawnPoint, TEMPSUMMON_DEAD_DESPAWN))
                     {
@@ -235,7 +242,7 @@ class boss_devourer_of_souls : public CreatureScript
                         else if (summon->GetEntry() == NPC_SYLVANAS_PART2)
                             DoScriptText(SAY_SYLVANAS_OUTRO, summon);
                     }
-                }
+                }*/
             }
 
             void SpellHitTarget(Unit* /*target*/, const SpellInfo* spell)
@@ -390,6 +397,47 @@ class achievement_three_faced : public AchievementCriteriaScript
 
             return false;
         }
+};
+
+
+class forja_de_almas_end_event : public CreatureScript
+{
+public:
+    forja_de_almas_end_event() : CreatureScript("forja_de_almas_end_event") { }
+
+    struct forja_de_almas_end_eventAI : public ScriptedAI
+    {
+        forja_de_almas_end_eventAI(Creature* creature) : ScriptedAI(creature) {}
+
+	
+  void Reset()
+    {}
+
+
+  void UpdateAI(const uint32 diff)
+  {
+  
+   if(me->GetEntry() == NPC_JAINA_PART2)
+   {
+   
+   
+   }
+  
+  
+  
+  }
+
+
+
+
+
+	};
+
+CreatureAI* GetAI(Creature* creature) const
+    {
+        return new forja_de_almas_end_eventAI(creature);
+    }
+
 };
 
 void AddSC_boss_devourer_of_souls()

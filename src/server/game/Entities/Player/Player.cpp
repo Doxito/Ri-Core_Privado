@@ -10905,7 +10905,7 @@ InventoryResult Player::CanStoreItem_InSpecificSlot(uint8 bag, uint8 slot, ItemP
                 return EQUIP_ERR_ITEM_DOESNT_GO_INTO_BAG;
 
             // currencytoken case
-            if (slot >= CURRENCYTOKEN_SLOT_START && slot < CURRENCYTOKEN_SLOT_END && !(pProto->BagFamily & BAG_FAMILY_MASK_CURRENCY_TOKENS))
+            if (slot >= CURRENCYTOKEN_SLOT_START && slot < CURRENCYTOKEN_SLOT_END && !(pProto->IsCurrencyToken()))
                 return EQUIP_ERR_ITEM_DOESNT_GO_INTO_BAG;
 
             // prevent cheating
@@ -11258,7 +11258,7 @@ InventoryResult Player::CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec &des
                     return EQUIP_ERR_CANT_CARRY_MORE_OF_THIS;
                 }
             }
-            else if (pProto->BagFamily & BAG_FAMILY_MASK_CURRENCY_TOKENS)
+            else if (pProto->IsCurrencyToken())
             {
                 res = CanStoreItem_InInventorySlots(CURRENCYTOKEN_SLOT_START, CURRENCYTOKEN_SLOT_END, dest, pProto, count, false, pItem, bag, slot);
                 if (res != EQUIP_ERR_OK)
@@ -11425,7 +11425,7 @@ InventoryResult Player::CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec &des
                 return EQUIP_ERR_CANT_CARRY_MORE_OF_THIS;
             }
         }
-        else if (pProto->BagFamily & BAG_FAMILY_MASK_CURRENCY_TOKENS)
+        else if (pProto->IsCurrencyToken())
         {
             res = CanStoreItem_InInventorySlots(CURRENCYTOKEN_SLOT_START, CURRENCYTOKEN_SLOT_END, dest, pProto, count, false, pItem, bag, slot);
             if (res != EQUIP_ERR_OK)
@@ -11674,7 +11674,7 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
             if (b_found)
                 continue;
 
-            if (pProto->BagFamily & BAG_FAMILY_MASK_CURRENCY_TOKENS)
+            if (pProto->IsCurrencyToken())
             {
                 for (uint32 t = CURRENCYTOKEN_SLOT_START; t < CURRENCYTOKEN_SLOT_END; ++t)
                 {

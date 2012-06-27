@@ -1244,7 +1244,7 @@ public:
         void HandleDummy(SpellEffIndex /*effIndex*/)
         {
             if (Creature* target = GetHitCreature())
-                target()->CastSpell(GetCaster(), SPELL_BUNNY_CREDIT_BEAM, false);
+                target->CastSpell(GetCaster(), SPELL_BUNNY_CREDIT_BEAM, false);
         }
 
         void Register()
@@ -1287,4 +1287,5 @@ void AddSC_quest_spell_scripts()
     new spell_q12987_read_pronouncement();
 	new spell_q12589_shoot_RJR();
     new spell_q12277_wintergarde_mine_explosion();
+    new spell_q12066_bunny_kill_credit();
 }

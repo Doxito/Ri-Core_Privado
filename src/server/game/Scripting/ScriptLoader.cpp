@@ -76,6 +76,7 @@ void AddSC_npcs_special();
 void AddSC_npc_taxi();
 void AddSC_achievement_scripts();
 void AddSC_evento_onyxia();
+void AddSC_evento_midsummer();
 
 //eastern kingdoms
 void AddSC_alterac_valley();                 //Alterac Valley
@@ -686,6 +687,7 @@ void AddWorldScripts()
     AddSC_achievement_scripts();
     AddSC_chat_log();
 	AddSC_evento_onyxia();
+	AddSC_evento_midsummer();
 #endif
 }
 

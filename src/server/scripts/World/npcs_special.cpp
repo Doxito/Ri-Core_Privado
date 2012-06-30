@@ -2989,6 +2989,7 @@ public:
 };
 
 
+
 #define GOSSIP_EVSU1  "Necesito otro Silbato de hu""\xC3\xA9""rfano."
 
 // Evento Amor en el Aire - Quest: Una charla amistosa
@@ -3000,7 +3001,7 @@ public:
 
  
 	bool OnGossipHello(Player* player, Creature* creature)
-        { 
+	{ 
 			if (creature->isQuestGiver())
             player->PrepareQuestMenu(creature->GetGUID());
 
@@ -3046,7 +3047,7 @@ public:
         }
 
         bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
-        {
+		{
             player->PlayerTalkClass->ClearMenus();
             
 
@@ -3112,6 +3113,9 @@ public:
     }
 };
 
+
+
+
 void AddSC_npcs_special()
 {
     new npc_air_force_bots;
@@ -3146,4 +3150,5 @@ void AddSC_npcs_special()
     new npc_spring_rabbit();
 	new npc_supervisoras_even();
     new npc_generic_harpoon_cannon();
+	
 }

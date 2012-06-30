@@ -2790,8 +2790,10 @@ public:
     }
 };
 
+
 void AddSC_generic_spell_scripts()
 {
+	
     new spell_gen_absorb0_hitlimit1();
     new spell_gen_aura_of_anger();
     new spell_gen_av_drekthar_presence();

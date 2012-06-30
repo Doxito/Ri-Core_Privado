@@ -1061,7 +1061,7 @@ class npc_frostlord_ahune : public CreatureScript
 							if (!_submerged){
                             me->SummonCreature(NPC_AHUNITE_HAILSTONE, float(irand(-110, -80)), float(irand(-225, -215)), -1.0f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 5000);
 							  
-							_events.ScheduleEvent(EVENT_SUMMON_HAILSTONE, 25000);
+							_events.ScheduleEvent(EVENT_SUMMON_HAILSTONE, 36000);
 							}
                             break;
                         case EVENT_SUMMON_COLDWAVE:

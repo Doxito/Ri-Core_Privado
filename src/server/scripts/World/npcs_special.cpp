@@ -3118,6 +3118,62 @@ public:
 
 
 
+class npc_devolver_items_perdidos : public CreatureScript
+{
+public:
+    npc_devolver_items_perdidos() : CreatureScript("npc_devolver_items_perdidos") { }
+
+ 
+	bool OnGossipHello(Player* player, Creature* creature)
+	{ 
+			if (creature->isQuestGiver())
+            player->PrepareQuestMenu(creature->GetGUID());
+
+			//Draco Albino
+	 if (player->GetAchievementMgr().HasAchieved(2143) && !player->HasSpell(44178))
+         player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, """\xc2\xa1""Quiero m""\xc3\xad"" Draco Albino!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+	 
+	        //100 monturas Alianza
+	 if (player->GetAchievementMgr().HasAchieved(2536) && !player->HasSpell(61996))
+         player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, """\xc2\xa1""Quiero m""\xc3\xad"" Dracohalc""\xC3\xB3""n Azul!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+ 
+	       //100 monturas Hordas
+	 if (player->GetAchievementMgr().HasAchieved(2537) && !player->HasSpell(61997))
+         player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, """\xc2\xa1""Quiero m""\xc3\xad"" Dracohalc""\xC3\xB3""n Rojo!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+			
+
+
+
+            player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
+            return true;
+        }
+
+        bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
+		{
+            player->PlayerTalkClass->ClearMenus();
+            
+
+            switch(action)
+            {
+                case GOSSIP_ACTION_INFO_DEF + 1: 
+                    player->CLOSE_GOSSIP_MENU();
+                    player->CastSpell(player, 44178, true);
+                    break;
+                case GOSSIP_ACTION_INFO_DEF + 2: 
+                    player->CLOSE_GOSSIP_MENU();
+                    player->CastSpell(player, 61996, true);
+                    break;
+                case GOSSIP_ACTION_INFO_DEF + 3: 
+                    player->CLOSE_GOSSIP_MENU();
+                    player->CastSpell(player, 61997, true);
+                    break;
+            }
+            return true;
+		}
+
+};
+
+
 
 void AddSC_npcs_special()
 {
@@ -3150,6 +3206,7 @@ void AddSC_npcs_special()
     new npc_fire_elemental;
     new npc_earth_elemental;
     new npc_firework;
+	new npc_devolver_items_perdidos();
     new npc_spring_rabbit();
 	new npc_supervisoras_even();
     new npc_generic_harpoon_cannon();

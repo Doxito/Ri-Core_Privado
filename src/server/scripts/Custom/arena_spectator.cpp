@@ -302,8 +302,8 @@ class arena_spectator_commands : public CommandScript
         {
             static ChatCommand spectateCommandTable[] =
             {
-                { "seguir",         SEC_PLAYER,      true,  &HandleSpectateCommand,        "", NULL },
-                { "ver",            SEC_PLAYER,      true,  &HandleSpectateFromCommand,    "", NULL },
+                { "ver",            SEC_PLAYER,      true,  &HandleSpectateCommand,        "", NULL },
+                { "seguir",         SEC_PLAYER,      true,  &HandleSpectateFromCommand,    "", NULL },
                 { "reset",          SEC_PLAYER,      true,  &HandleSpectateResetCommand,   "", NULL },
                 { "salir",          SEC_PLAYER,      true,  &HandleSpectateCancelCommand,  "", NULL },
                 { NULL,             0,               false, NULL,                          "", NULL }

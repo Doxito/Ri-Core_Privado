@@ -2535,12 +2535,12 @@ SpellMissInfo Unit::MagicSpellHitResult(Unit* victim, SpellInfo const* spell)
     // Chance resist debuff
     if (!spell->IsPositive())
     {
-        bool bNegativeAura = true;
+        bool bNegativeAura = false;
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         {
-            if (spell->Effects[i].ApplyAuraName == 0)
+            if (spell->Effects[i].ApplyAuraName != 0)
             {
-                bNegativeAura = false;
+                bNegativeAura = true;
                 break;
             }
         }

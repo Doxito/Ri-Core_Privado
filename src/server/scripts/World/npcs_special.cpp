@@ -3157,15 +3157,15 @@ public:
             {
                 case GOSSIP_ACTION_INFO_DEF + 1: 
                     player->CLOSE_GOSSIP_MENU();
-                    player->CastSpell(player, 44178, true);
+					player->learnSpell(44178, true);
                     break;
                 case GOSSIP_ACTION_INFO_DEF + 2: 
                     player->CLOSE_GOSSIP_MENU();
-                    player->CastSpell(player, 61996, true);
+                    player->learnSpell(61996, true);
                     break;
                 case GOSSIP_ACTION_INFO_DEF + 3: 
                     player->CLOSE_GOSSIP_MENU();
-                    player->CastSpell(player, 61997, true);
+                   player->learnSpell(61997, true);
                     break;
             }
             return true;

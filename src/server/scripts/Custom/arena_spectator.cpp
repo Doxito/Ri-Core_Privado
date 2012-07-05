@@ -148,7 +148,7 @@ class arena_spectator_commands : public CommandScript
                     ArenaTeam *secondTeam = sArenaTeamMgr->GetArenaTeamById(secondTeamID);
                     if (firstTeam && secondTeam)
                     {
-                        handler->PSendSysMessage("Has entrado a una arena puntuada.");//Scripted By Dox
+                        handler->PSendSysMessage("Has entrado en una arena puntuada.");//Scripted By Dox
                         handler->PSendSysMessage("Equipos:");
                         handler->PSendSysMessage("%s - %s", firstTeam->GetName().c_str(), secondTeam->GetName().c_str());
                         handler->PSendSysMessage("%u(%u) - %u(%u)", firstTeam->GetRating(), firstTeam->GetAverageMMR(firstTeamMember->GetGroup()),

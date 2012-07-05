@@ -17,9 +17,9 @@
  */
 
 /* ScriptData
-Name: Arena Spectator
+Name: Arena Spectator by DOX
 %Complete: 100
-Comment: Script allow spectate arena games
+Comment: Scripted BY DOX
 Category: Custom Script
 EndScriptData */
 
@@ -65,14 +65,14 @@ class arena_spectator_commands : public CommandScript
 
             if (player->GetPet())
             {
-                handler->PSendSysMessage("You must hide your pet.");
+				handler->PSendSysMessage("RI-Spectator: Debes retirar tu mascota.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (player->GetMap()->IsBattlegroundOrArena() && !player->isSpectator())
             {
-                handler->PSendSysMessage("You are already on battleground or arena.");
+                handler->PSendSysMessage("RI-Spectator: ""\xc2\xa1""Ya est""\xC3\xA1""s en una arena!");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -80,14 +80,14 @@ class arena_spectator_commands : public CommandScript
             Map* cMap = target->GetMap();
             if (!cMap->IsBattleArena())
             {
-                handler->PSendSysMessage("Player didnt found in arena.");
+                handler->PSendSysMessage("RI-Spectator: Ese jugador no se encuentra en una arena.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (player->GetMap()->IsBattleground())
             {
-                handler->PSendSysMessage("Cant do that while you are on battleground.");
+                handler->PSendSysMessage("RI-Spectator: No puedes hacer eso cuando te encuentras en una BG.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -101,7 +101,7 @@ class arena_spectator_commands : public CommandScript
 
             if (target->isSpectator())
             {
-                handler->PSendSysMessage("Can`t do that. Your target is spectator.");
+                handler->PSendSysMessage("RI-Spectator: No puedes hacer eso, ese jugador est""\xC3\xA1"" en modo espectador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -148,8 +148,8 @@ class arena_spectator_commands : public CommandScript
                     ArenaTeam *secondTeam = sArenaTeamMgr->GetArenaTeamById(secondTeamID);
                     if (firstTeam && secondTeam)
                     {
-                        handler->PSendSysMessage("You entered to rated arena.");
-                        handler->PSendSysMessage("Teams:");
+                        handler->PSendSysMessage("Has entrado a una arena puntuada.");//Scripted By Dox
+                        handler->PSendSysMessage("Equipos:");
                         handler->PSendSysMessage("%s - %s", firstTeam->GetName().c_str(), secondTeam->GetName().c_str());
                         handler->PSendSysMessage("%u(%u) - %u(%u)", firstTeam->GetRating(), firstTeam->GetAverageMMR(firstTeamMember->GetGroup()),
                                                                     secondTeam->GetRating(), secondTeam->GetAverageMMR(secondTeamMember->GetGroup()));
@@ -175,7 +175,7 @@ class arena_spectator_commands : public CommandScript
 
             if (!player->isSpectator())
             {
-                handler->PSendSysMessage("You are not spectator.");
+                handler->PSendSysMessage("RI-Spectator: No est""\xC3\xA1""s en modo espectador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -199,28 +199,28 @@ class arena_spectator_commands : public CommandScript
 
             if (!target)
             {
-                handler->PSendSysMessage("Cant find player.");
+                handler->PSendSysMessage("RI-Spectator: No se encuentra a ese jugador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (!player->isSpectator())
             {
-                handler->PSendSysMessage("You are not spectator, spectate someone first.");
+				handler->PSendSysMessage("RI-Spectator: No puedes hacer eso si no est""\xC3\xA1""s en modo espectador primero. (.arena ver #jugador)");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (target->isSpectator() && target != player)
             {
-                handler->PSendSysMessage("Can`t do that. Your target is spectator.");
+                handler->PSendSysMessage("RI-Spectator: No puedes hacer eso, el jugador est""\xC3\xA1"" en modo espectador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (player->GetMap() != target->GetMap())
             {
-                handler->PSendSysMessage("Cant do that. Different arenas?");
+                handler->PSendSysMessage("RI-Spectator: No puedes hacer eso, el jugador est""\xC3\xA1"" en una arena diferente.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -229,7 +229,7 @@ class arena_spectator_commands : public CommandScript
             // if exists than battle didn`t begin
             if (target->HasAura(32728) || target->HasAura(32727))
             {
-                handler->PSendSysMessage("Cant do that. Arena didn`t started.");
+                handler->PSendSysMessage("RI-Spectator: No puedes hacer eso, la arena a""\xC3\xBA""n no ha comenzado.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -245,14 +245,14 @@ class arena_spectator_commands : public CommandScript
 
             if (!player)
             {
-                handler->PSendSysMessage("Cant find player.");
+                handler->PSendSysMessage("RI-Spectator: No se encuentra al jugador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
 
             if (!player->isSpectator())
             {
-                handler->PSendSysMessage("You are not spectator!");
+                handler->PSendSysMessage("RI-Spectator: ""\xc2\xa1""No est""\xC3\xA1""s en modo espectador!");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
@@ -303,7 +303,7 @@ class arena_spectator_commands : public CommandScript
             static ChatCommand spectateCommandTable[] =
             {
                 { "seguir",         SEC_PLAYER,      true,  &HandleSpectateCommand,        "", NULL },
-                { "ver",           SEC_PLAYER,      true,  &HandleSpectateFromCommand,    "", NULL },
+                { "ver",            SEC_PLAYER,      true,  &HandleSpectateFromCommand,    "", NULL },
                 { "reset",          SEC_PLAYER,      true,  &HandleSpectateResetCommand,   "", NULL },
                 { "salir",          SEC_PLAYER,      true,  &HandleSpectateCancelCommand,  "", NULL },
                 { NULL,             0,               false, NULL,                          "", NULL }
@@ -338,8 +338,8 @@ class npc_arena_spectator : public CreatureScript
 
         bool OnGossipHello(Player* pPlayer, Creature* pCreature)
         {
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "View games with high rating...", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_TOP_GAMES);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "View games with low rating...", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ver partidas de alto rating...", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_TOP_GAMES);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ver partidas de bajo rating...", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES);
             pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetGUID());
             return true;
         }
@@ -470,10 +470,10 @@ class npc_arena_spectator : public CreatureScript
             }
 
             if (page > 0)
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, "Prev...", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES + page - 1);
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, "Anterior...", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES + page - 1);
 
             if (haveNextPage)
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, "Next...", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES + page + 1);
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, "Siguiente...", GOSSIP_SENDER_MAIN, NPC_SPECTATOR_ACTION_LIST_GAMES + page + 1);
         }
 };
 

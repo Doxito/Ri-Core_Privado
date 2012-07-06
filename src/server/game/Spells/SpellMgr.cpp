@@ -2991,6 +2991,9 @@ void SpellMgr::LoadDbcDataCorrections()
 			case 24259: // Spell Lock silence
 				spellInfo->speed = 80;
 				break;
+		    case 23881: // Bloodthirst
+                spellInfo->EffectImplicitTargetA[1] = 1;
+                break;
             case 40244: case 40245: // Simon Game Visual
             case 40246: case 40247: // Simon Game Visual
             case 42835: // Spout, remove damage effect, only anim is needed

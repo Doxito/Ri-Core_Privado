@@ -345,6 +345,7 @@ public:
         }
 
         uint32 uiDespawnTimer;
+		uint32 FuegoDamage;
         InstanceScript* instance;
 
         void Reset()
@@ -353,10 +354,11 @@ public:
             //! HACK: Creature's can't have MOVEMENTFLAG_FLYING
             me->AddUnitMovementFlag(MOVEMENTFLAG_FLYING);
             me->setFaction(16);
+			FuegoDamage = 1000;
             me->SetObjectScale(1.0f);
             DoCast(me, SPELL_FLAME_SPHERE_VISUAL);
             DoCast(me, SPELL_FLAME_SPHERE_SPAWN_EFFECT);
-            DoCast(me, SPELL_FLAME_SPHERE_PERIODIC);
+          //  DoCast(me, SPELL_FLAME_SPHERE_PERIODIC);
             uiDespawnTimer = 10*IN_MILLISECONDS;
         }
 
@@ -370,6 +372,14 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
+
+ if (FuegoDamage <= diff)
+ {
+	 me->CastSpell(me, 55927, true);
+FuegoDamage = 1000;
+ } else FuegoDamage -= diff;
+
+
             if (uiDespawnTimer <= diff)
                 me->DisappearAndDie();
             else

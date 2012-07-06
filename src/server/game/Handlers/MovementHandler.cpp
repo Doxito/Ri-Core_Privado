@@ -433,9 +433,8 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recvData)
     {
         plrMover->UpdateFallInformationIfNeed(movementInfo, opcode);
 
-		// Sistema antiguo
         if (movementInfo.pos.GetPositionZ() < -500.0f)
-        {
+		{
             if (!(plrMover->GetBattleground() && plrMover->GetBattleground()->HandlePlayerUnderMap(_player)))
             {
                 // NOTE: this is actually called many times while falling
@@ -452,15 +451,6 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recvData)
                 }
             }
         }
-
-		// nuevo sistema
-		if (plrMover->InBattleground())
-		{
-			if (plrMover->GetBattleground()->IsPlayerUnderMap(_player, movementInfo.pos.GetPositionX(), movementInfo.pos.GetPositionY(), movementInfo.pos.GetPositionZ()))
-			{
-				plrMover->GetBattleground()->HandlePlayerUnderMap(_player);
-			}
-		}		
     }
 }
 

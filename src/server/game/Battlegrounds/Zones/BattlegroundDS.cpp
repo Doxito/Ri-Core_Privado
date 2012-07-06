@@ -214,14 +214,10 @@ bool BattlegroundDS::HandlePlayerUnderMap(Player* player)
 
 bool BattlegroundDS::IsPlayerUnderMap(Player* /*player*/, float /*x*/, float /*y*/, float z)
 {
-	if (z < 2)
-	{
+	if (z < 3)
 		return true;
-	}
 	else
-	{
 		return false;
-	}
 }
 
 void BattlegroundDS::FillInitialWorldStates(WorldPacket &data)

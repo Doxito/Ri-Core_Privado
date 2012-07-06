@@ -107,14 +107,10 @@ bool BattlegroundBE::HandlePlayerUnderMap(Player* player)
 
 bool BattlegroundBE::IsPlayerUnderMap(Player* /*player*/, float /*x*/, float /*y*/, float z)
 {
-	if (z < 0)
-	{
+	if (z < 0.5) // - BY DOX
 		return true;
-	}
 	else
-	{
 		return false;
-	}
 }
 
 void BattlegroundBE::HandleAreaTrigger(Player* Source, uint32 Trigger)

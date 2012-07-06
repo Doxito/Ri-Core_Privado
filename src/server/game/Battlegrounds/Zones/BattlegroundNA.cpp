@@ -104,14 +104,10 @@ bool BattlegroundNA::HandlePlayerUnderMap(Player* player)
 
 bool BattlegroundNA::IsPlayerUnderMap(Player* /*player*/, float /*x*/, float /*y*/, float z)
 {
-	if (z < 10)
-	{
+	if (z < 11)
 		return true;
-	}
 	else
-	{
 		return false;
-	}
 }
 
 void BattlegroundNA::HandleAreaTrigger(Player* Source, uint32 Trigger)

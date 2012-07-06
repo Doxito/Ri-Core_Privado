@@ -259,6 +259,12 @@ void BattlegroundEY::UpdatePointStatuses()
                     if (m_PointState[point] == EY_POINT_UNDER_CONTROL && player->GetTeam() != m_PointOwnedByTeam[point])
                         this->EventTeamLostPoint(player, point);
                 }
+				
+				// hack fix for Fel Reaver Ruins -- By Dox 100%   - YEA!
+               if (point == FEL_REAVER && m_PointOwnedByTeam[point] == plr->GetTeam())
+                  if (m_FlagState && GetFlagPickerGUID() == plr->GetGUID())
+                        if (plr->GetDistance2d(2044,1730) < 2)
+                         EventPlayerCapturedFlag(plr, BG_EY_OBJECT_FLAG_FEL_REAVER);
             }
         }
     }

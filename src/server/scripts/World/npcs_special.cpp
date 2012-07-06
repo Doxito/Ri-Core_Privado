@@ -3130,7 +3130,7 @@ public:
             player->PrepareQuestMenu(creature->GetGUID());
 
 			//Draco Albino
-	 if (player->GetAchievementMgr().HasAchieved(2143) && !player->HasSpell(44178))
+	 if (player->GetAchievementMgr().HasAchieved(2143) && !player->HasSpell(60025))
          player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, """\xc2\xa1""Quiero m""\xc3\xad"" Draco Albino!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 	 
 	        //100 monturas Alianza
@@ -3157,7 +3157,7 @@ public:
             {
                 case GOSSIP_ACTION_INFO_DEF + 1: 
                     player->CLOSE_GOSSIP_MENU();
-					player->learnSpell(44178, true);
+					player->learnSpell(60025, true);
                     break;
                 case GOSSIP_ACTION_INFO_DEF + 2: 
                     player->CLOSE_GOSSIP_MENU();

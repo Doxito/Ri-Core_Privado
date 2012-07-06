@@ -19,7 +19,7 @@
 /* ScriptData
 Name: Arena Spectator by DOX
 %Complete: 100
-Comment: Scripted BY DOX
+Comment: Scripted BY DOX 100%
 Category: Custom Script
 EndScriptData */
 
@@ -374,16 +374,17 @@ class npc_arena_spectator : public CreatureScript
             std::string sClass = "";
             switch (id)
             {
-                case CLASS_WARRIOR:         sClass = "Warrior ";        break;
-                case CLASS_PALADIN:         sClass = "Pala ";           break;
-                case CLASS_HUNTER:          sClass = "Hunt ";           break;
-                case CLASS_ROGUE:           sClass = "Rogue ";          break;
-                case CLASS_PRIEST:          sClass = "Priest ";         break;
+                case CLASS_WARRIOR:         sClass = "Guerrero ";        break;
+                case CLASS_PALADIN:         sClass = "Palad""\xC3\xAD""n ";           break;
+                case CLASS_HUNTER:          sClass = "Cazador ";           break;
+                case CLASS_ROGUE:           sClass = "P""\xC3\xAD""caro ";          break;
+                case CLASS_PRIEST:          sClass = "Sacerdote ";         break;
                 case CLASS_DEATH_KNIGHT:    sClass = "DK ";             break;
-                case CLASS_SHAMAN:          sClass = "Shama ";          break;
-                case CLASS_MAGE:            sClass = "Mage ";           break;
-                case CLASS_WARLOCK:         sClass = "Warlock ";        break;
-                case CLASS_DRUID:           sClass = "Druid ";          break;
+                case CLASS_SHAMAN:          sClass = "Cham""\xC3\xA1""n ";          break;
+                case CLASS_MAGE:            sClass = "Mago ";           break;
+                case CLASS_WARLOCK:         sClass = "Brujo ";        break;
+                case CLASS_DRUID:           sClass = "Druida ";          break; //Scripted By Dox 100% FULL DOX!
+				
             }
             return sClass;
         }

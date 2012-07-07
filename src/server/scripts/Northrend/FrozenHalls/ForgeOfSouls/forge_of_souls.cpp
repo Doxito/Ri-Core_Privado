@@ -35,7 +35,7 @@ enum Events
 
 /****************************************SYLVANAS************************************/
 #define GOSSIP_SYLVANAS_ITEM    """\xc2\xbf""Qu""\xC3\xA9"" quieres de nosotros, reina alma en pena?"
-#define GOSSIP_JAINA_ITEM       """\xc2\xbf""Qu""\xC3\xA9"" desea de nosotros, señora?"
+#define GOSSIP_JAINA_ITEM       """\xc2\xbf""Qu""\xC3\xA9"" desea de nosotros?"
 
 enum Yells
 {

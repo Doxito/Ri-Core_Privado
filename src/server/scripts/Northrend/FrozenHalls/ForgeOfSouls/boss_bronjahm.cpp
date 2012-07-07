@@ -263,7 +263,6 @@ class mob_corrupted_soul_fragment : public CreatureScript
 				 {
                    me->GetMotionMaster()->MoveFollow(bronja, 0, 0, MOTION_SLOT_ACTIVE);
 				   CreatureBronja = bronja;
-				   DoScriptText(SAY_AGGRO, me);
 				   Variables = true;
 				 }
 				 else

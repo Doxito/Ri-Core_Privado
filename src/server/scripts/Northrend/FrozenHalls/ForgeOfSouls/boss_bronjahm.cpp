@@ -19,6 +19,18 @@
 #include "SpellAuraEffects.h"
 #include "forge_of_souls.h"
 
+/*
+Reinos Iberos - By Dox
+ - El trozo de alma ya cura correctamente a brojahm.
+ - La segunda fase del boss ya funciona.
+ - En la fase 2 solo lanzará bolas de sombras, sin importar la distancia del top aggro.
+
+ 
+ %scripteado -> 100%
+
+
+*/
+
 enum Yells
 {
     SAY_AGGRO           = -1632001,
@@ -70,6 +82,8 @@ class boss_bronjahm : public CreatureScript
                 DoCast(me, SPELL_SOULSTORM_CHANNEL, true);
             }
 
+			bool Phase2;
+
             void InitializeAI()
             {
                 if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != sObjectMgr->GetScriptId(FoSScriptName))
@@ -85,6 +99,8 @@ class boss_bronjahm : public CreatureScript
                 events.ScheduleEvent(EVENT_SHADOW_BOLT, 2000);
                 events.ScheduleEvent(EVENT_MAGIC_BANE, urand(8000, 20000));
                 events.ScheduleEvent(EVENT_CORRUPT_SOUL, urand(25000, 35000), 0, PHASE_1);
+				me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+				Phase2 = false;
 
                 instance->SetBossState(DATA_BRONJAHM, NOT_STARTED);
             }
@@ -120,9 +136,11 @@ class boss_bronjahm : public CreatureScript
                 if (events.GetPhaseMask() & (1 << PHASE_1) && !HealthAbovePct(30))
                 {
                     events.SetPhase(PHASE_2);
+					Phase2 = true;
                     DoCast(me, SPELL_TELEPORT);
+					me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                     events.ScheduleEvent(EVENT_FEAR, urand(12000, 16000), 0, PHASE_2);
-                    events.ScheduleEvent(EVENT_SOULSTORM, 100, 0, PHASE_2);
+                    events.ScheduleEvent(EVENT_SOULSTORM, 800, 0, PHASE_2);
                 }
             }
 
@@ -154,8 +172,12 @@ class boss_bronjahm : public CreatureScript
                             events.ScheduleEvent(EVENT_MAGIC_BANE, urand(8000, 20000));
                             break;
                         case EVENT_SHADOW_BOLT:
+							if(!Phase2){
                             if (!me->IsWithinMeleeRange(me->getVictim()))
-                                DoCastVictim(SPELL_SHADOW_BOLT);
+                                DoCastVictim(SPELL_SHADOW_BOLT);}
+							else
+							  DoCastVictim(SPELL_SHADOW_BOLT);
+
                             events.ScheduleEvent(EVENT_SHADOW_BOLT, 2000);
                             break;
                         case EVENT_CORRUPT_SOUL:
@@ -169,7 +191,7 @@ class boss_bronjahm : public CreatureScript
                         case EVENT_SOULSTORM:
                             DoScriptText(SAY_SOUL_STORM, me);
                             me->CastSpell(me, SPELL_SOULSTORM_VISUAL, true);
-                            me->CastSpell(me, SPELL_SOULSTORM, false);
+                            me->CastSpell(me, SPELL_SOULSTORM, false); // 6 sg
                             break;
                         case EVENT_FEAR:
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
@@ -181,6 +203,7 @@ class boss_bronjahm : public CreatureScript
                     }
                 }
 
+				if(!Phase2)
                 DoMeleeAttackIfReady();
             }
         };
@@ -203,7 +226,7 @@ class mob_corrupted_soul_fragment : public CreatureScript
                 instance = me->GetInstanceScript();
             }
 
-            void MovementInform(uint32 type, uint32 id)
+       /*     void MovementInform(uint32 type, uint32 id)
             {
                 if (type != CHASE_MOTION_TYPE)
                     return;
@@ -222,8 +245,41 @@ class mob_corrupted_soul_fragment : public CreatureScript
                         summ->UnSummon();
                     }
                 }
-            }
+            }*/
 
+			Creature* CreatureBronja;
+			bool Variables;
+
+ void Reset()
+ {Variables = false;}
+
+ void UpdateAI(const uint32 diff)
+ {
+ 
+  if (!Variables)
+            {
+                me->GetMotionMaster()->Clear(false);
+				 if (Creature* bronja = me->FindNearestCreature(36497, 120.0f))
+				 {
+                   me->GetMotionMaster()->MoveFollow(bronja, 0, 0, MOTION_SLOT_ACTIVE);
+				   CreatureBronja = bronja;
+				   DoScriptText(SAY_AGGRO, me);
+				   Variables = true;
+				 }
+				 else
+				   me->DespawnOrUnsummon();
+            }
+  else
+  {
+       if(!CreatureBronja)
+          me->DespawnOrUnsummon();
+	   else if(me->GetDistance2d(CreatureBronja) <= 0.5)
+	   {
+		   me->CastSpell(CreatureBronja, SPELL_CONSUME_SOUL, true);
+		   me->DespawnOrUnsummon();
+	   }
+  }
+}
         private:
             InstanceScript* instance;
         };

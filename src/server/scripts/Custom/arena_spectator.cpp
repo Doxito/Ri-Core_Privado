@@ -171,21 +171,30 @@ class arena_spectator_commands : public CommandScript
 
         static bool HandleSpectateCancelCommand(ChatHandler* handler, const char* /*args*/)
         {
+			if(handler) //Verificamos la existencia de la función de la cuenta
+			{
             Player* player =  handler->GetSession()->GetPlayer();
-
+            if (player && player->IsInWorld()) //Verificamos que el player existe y no está fuera del mundo o cargando pant.
+			{
             if (!player->isSpectator())
             {
                 handler->PSendSysMessage("RI-Spectator: No est""\xC3\xA1""s en modo espectador.");
                 handler->SetSentErrorMessage(true);
                 return false;
             }
-
+			else 
+			{
+	//Vamos a ver, si no es espectador, le mete un return false, pero no confirma que no se ejecuten el resto de las funciones.
+	//¿Tendrá algo que ver con la caida?
             player->GetBattleground()->RemoveSpectator(player->GetGUID());
             player->CancelSpectate();
             player->TeleportToBGEntryPoint();
 
             return true;
-        }
+			}
+	      } return false;
+	     } return false;
+	}
 
         static bool HandleSpectateFromCommand(ChatHandler* handler, const char *args)
         {

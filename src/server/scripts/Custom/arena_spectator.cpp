@@ -62,6 +62,13 @@ class arena_spectator_commands : public CommandScript
                 handler->SetSentErrorMessage(true);
                 return false;
             }
+			
+			if (player->IsMounted())
+            {
+				handler->PSendSysMessage("RI-Spectator: Debes bajarte de la montura.");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
 
             if (player->GetPet())
             {
@@ -178,8 +185,11 @@ class arena_spectator_commands : public CommandScript
 			{
             if (!player->isSpectator())
             {
+				if(handler)
+					{
                 handler->PSendSysMessage("RI-Spectator: No est""\xC3\xA1""s en modo espectador.");
                 handler->SetSentErrorMessage(true);
+				}
                 return false;
             }
 			else 

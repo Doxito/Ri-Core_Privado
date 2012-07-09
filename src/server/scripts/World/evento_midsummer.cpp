@@ -72,7 +72,7 @@ public:
 		            }
 		 }
             
-       }
+		}
 		else
 		{
 		     if(PersonasBailando > 0)

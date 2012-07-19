@@ -1,0 +1,3 @@
+INSERT INTO `spell_linked_spell` (`spell_trigger`, `spell_effect`, `type`, `comment`) VALUES (1022, -46924, 1, 'Hand of protection (Rank1) - remove bladestorm');
+INSERT INTO `spell_linked_spell` (`spell_trigger`, `spell_effect`, `type`, `comment`) VALUES (5599, -46924, 1, 'Hand of protection (Rank2) - remove bladestorm');
+INSERT INTO `spell_linked_spell` (`spell_trigger`, `spell_effect`, `type`, `comment`) VALUES (10278, -46924, 1, 'Hand of protection (Rank3) - remove bladestorm');

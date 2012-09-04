@@ -2535,12 +2535,12 @@ SpellMissInfo Unit::MagicSpellHitResult(Unit* victim, SpellInfo const* spell)
     // Chance resist debuff
     if (!spell->IsPositive())
     {
-        bool bNegativeAura = false;
+        bool bNegativeAura = true;
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         {
-            if (spell->Effects[i].ApplyAuraName != 0)
+            if (spell->Effects[i].ApplyAuraName == 0)
             {
-                bNegativeAura = true;
+                bNegativeAura = false;
                 break;
             }
         }
@@ -16306,12 +16306,16 @@ void Unit::RemoveCharmedBy(Unit* charmer)
                 charmer->ToPlayer()->SetClientControl(charmer, 1);
                 charmer->ToPlayer()->SetViewpoint(this, false);
                 charmer->ToPlayer()->SetClientControl(this, 0);
+                if (GetTypeId() == TYPEID_PLAYER)
+                    ToPlayer()->SetMover(this);
                 break;
             case CHARM_TYPE_POSSESS:
                 charmer->ToPlayer()->SetClientControl(charmer, 1);
                 charmer->ToPlayer()->SetViewpoint(this, false);
                 charmer->ToPlayer()->SetClientControl(this, 0);
                 charmer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                if (GetTypeId() == TYPEID_PLAYER)
+                    ToPlayer()->SetMover(this);
                 break;
             case CHARM_TYPE_CHARM:
                 if (GetTypeId() == TYPEID_UNIT && charmer->getClass() == CLASS_WARLOCK)

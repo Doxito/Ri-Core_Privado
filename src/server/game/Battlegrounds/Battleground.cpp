@@ -1314,14 +1314,11 @@ void Battleground::EventPlayerLoggedOut(Player* player)
                     EndBattleground(GetOtherTeam(player->GetTeam()));
         }
     }
-
-    if (!player->isSpectator())
-        player->LeaveBattleground();
-    else
-    {
+    if (player->isSpectator())
+	{
         player->TeleportToBGEntryPoint();
         RemoveSpectator(player->GetGUID());
-    }
+	}
 }
 
 // This method should be called only once ... it adds pointer to queue

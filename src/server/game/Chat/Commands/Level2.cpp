@@ -74,6 +74,9 @@ bool ChatHandler::HandleMuteCommand(const char* args)
 
     uint32 notspeaktime = (uint32) atoi(delayStr);
 
+	if (notspeaktime < 0 || notspeaktime > 60)
+		notspeaktime = 60;	
+	
     // must have strong lesser security level
     if (HasLowerSecurity (target, target_guid, true))
         return false;

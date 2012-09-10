@@ -64,6 +64,69 @@
 #include "Group.h"
 #include "ChannelMgr.h"
 
+bool ChatHandler::HandleSilenceCommand(const char* args)
+{
+    char* nameStr;
+    char* delayStr;
+    extractOptFirstArg((char*)args, &nameStr, &delayStr);
+    if (!delayStr)
+        return false;
+
+    char *mutereason = strtok(NULL, "\r");
+    std::string mutereasonstr = "No reason";
+    if (mutereason != NULL)
+         mutereasonstr = mutereason;
+
+    Player* target;
+    uint64 target_guid;
+    std::string target_name;
+    if (!extractPlayerTarget(nameStr, &target, &target_guid, &target_name))
+        return false;
+
+    uint32 accountId = target ? target->GetSession()->GetAccountId() : sObjectMgr->GetPlayerAccountIdByGUID(target_guid);
+
+    // find only player from same account if any
+    if (!target)
+        if (WorldSession* session = sWorld->FindSession(accountId))
+            target = session->GetPlayer();
+
+    uint32 notspeaktime = (uint32) atoi(delayStr);
+	
+    // must have strong lesser security level
+    if (HasLowerSecurity (target, target_guid, true))
+        return false;
+
+    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_UPD_MUTE_TIME);
+
+    if (target)
+    {
+        // Target is online, mute will be in effect right away.
+        int64 muteTime = time(NULL) + notspeaktime * MINUTE;
+        target->GetSession()->m_muteTime = muteTime;
+
+        stmt->setInt64(0, muteTime);
+
+        ChatHandler(target).PSendSysMessage(LANG_YOUR_CHAT_DISABLED, notspeaktime, mutereasonstr.c_str());
+    }
+    else
+    {
+        // Target is offline, mute will be in effect starting from the next login.
+        int32 muteTime = -int32(notspeaktime * MINUTE);
+
+        stmt->setInt64(0, muteTime);
+    }
+
+    stmt->setUInt32(1, accountId);
+
+    LoginDatabase.Execute(stmt);
+
+    std::string nameLink = playerLink(target_name);
+
+    PSendSysMessage(target ? LANG_YOU_DISABLE_CHAT : LANG_COMMAND_DISABLE_CHAT_DELAYED, nameLink.c_str(), notspeaktime, mutereasonstr.c_str());
+
+    return true;
+}
+
 bool ChatHandler::HandleMaxSkillCommand(const char* /*args*/)
 {
     Player* SelectedPlayer = getSelectedPlayer();

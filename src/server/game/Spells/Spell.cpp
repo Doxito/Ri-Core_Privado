@@ -6592,6 +6592,14 @@ CurrentSpellTypes Spell::GetCurrentContainer() const
 
 bool Spell::CheckEffectTarget(Unit const* target, uint32 eff) const
 {
+	// Heroism over LOS
+	if (m_spellInfo->Id == 32182) 
+	return true;
+
+	// Bloodlust over LOS
+	if (m_spellInfo->Id == 2825) 
+	return true;
+	
     switch (m_spellInfo->Effects[eff].ApplyAuraName)
     {
         case SPELL_AURA_MOD_POSSESS:

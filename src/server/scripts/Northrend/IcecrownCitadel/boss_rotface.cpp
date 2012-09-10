@@ -157,9 +157,13 @@ class boss_rotface : public CreatureScript
                     Talk(SAY_SLIME_SPRAY);
             }
 
-            void MoveInLineOfSight(Unit* /*who*/)
+            void MoveInLineOfSight(Unit* who)
             {
-                // don't enter combat
+                if (me->IsWithinDistInMap(who, 20.0f))	
+                {	
+                    me->SetReactState(REACT_AGGRESSIVE);	
+                    me->SetInCombatWithZone();	
+                }
             }
 
             void UpdateAI(const uint32 diff)

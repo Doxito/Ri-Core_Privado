@@ -292,7 +292,7 @@ public:
                     if (uiDeathBiteTimer <= diff)
                     {
                         DoCastAOE(SPELL_DEATH_BITE);
-                        uiDeathBiteTimer = urand (1000, 2000);
+                        uiDeathBiteTimer = urand (2000, 4000);
                     } else uiDeathBiteTimer -= diff;
                     if (uiMarkedDeathTimer <= diff)
                     {

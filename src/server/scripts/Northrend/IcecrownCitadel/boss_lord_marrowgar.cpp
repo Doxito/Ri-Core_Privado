@@ -145,11 +145,6 @@ class boss_lord_marrowgar : public CreatureScript
                     Talk(SAY_ENTER_ZONE);
                     _introDone = true;
                 }
-                else if (me->IsWithinDistInMap(who, 20.0f))	
-                {	
-                    me->SetReactState(REACT_AGGRESSIVE);	
-                    me->SetInCombatWithZone();	
-                }
             }
 
             void UpdateAI(uint32 const diff)
@@ -323,7 +318,7 @@ class npc_coldflame : public CreatureScript
                     }
 
                     me->SetOrientation(owner->GetAngle(target));
-                    owner->GetNearPosition(pos, owner->GetObjectSize() / 20.0f, 0.0f);
+                    owner->GetNearPosition(pos, owner->GetObjectSize() / 2.0f, 0.0f);
                 }
 
                 me->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), me->GetPositionZ(), me->GetOrientation());
@@ -572,12 +567,7 @@ class spell_marrowgar_bone_storm : public SpellScriptLoader
 
             void RecalculateDamage()
             {
-                if (Unit* caster = GetCaster())	
-                {	
-                    const float distance = GetHitUnit()->GetExactDist2d(caster);	
-                    const int32 damage   = GetHitDamage();	
-                    SetHitDamage(int32(damage - (damage * distance / (distance + caster->GetObjectSize() / 2))));	
-                }                
+				SetHitDamage(int32(GetHitDamage() / std::max(sqrtf(GetHitUnit()->GetExactDist2d(GetCaster())), 1.0f)));
             }
 
             void Register()

@@ -90,6 +90,7 @@ class boss_festergut : public CreatureScript
             void Reset()
             {
                 _Reset();
+				me->SetReactState(REACT_DEFENSIVE);
                 events.ScheduleEvent(EVENT_BERSERK, 300000);
                 events.ScheduleEvent(EVENT_INHALE_BLIGHT, urand(25000, 30000));
                 events.ScheduleEvent(EVENT_GAS_SPORE, urand(20000, 25000));
@@ -159,15 +160,6 @@ class boss_festergut : public CreatureScript
             {
                 if (spell->Id == PUNGENT_BLIGHT_HELPER)
                     target->RemoveAurasDueToSpell(INOCULATED_HELPER);
-            }
-			
-            void MoveInLineOfSight(Unit* who)	
-            {	
-                if (me->IsWithinDistInMap(who, 20.0f))	
-                {	
-                    me->SetReactState(REACT_AGGRESSIVE);	
-                    me->SetInCombatWithZone();	
-                }	
             }
 
             void UpdateAI(uint32 const diff)

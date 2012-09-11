@@ -1,0 +1,2 @@
+update quest_template set RequiredNpcOrGo1 = '33707' where id = '13699' OR id = '13725' OR id = '13713' OR id = '13723' OR id = '13724' OR id = '13726' OR id = '13731' OR id = '13728' OR id = '13727' OR id = '13729'
+UPDATE creature_template SET equipment_id = '1862' WHERE entry = '33448'

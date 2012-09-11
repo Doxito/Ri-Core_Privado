@@ -122,40 +122,205 @@ enum eSquireDavid
 {
     QUEST_THE_ASPIRANT_S_CHALLENGE_H                    = 13680,
     QUEST_THE_ASPIRANT_S_CHALLENGE_A                    = 13679,
-
-    NPC_ARGENT_VALIANT                                  = 33448,
-
+ 
+	ACTION_START_DAVID									= 1,
     GOSSIP_TEXTID_SQUIRE                                = 14407
 };
 
-#define GOSSIP_SQUIRE_ITEM_1 "I am ready to fight!"
-#define GOSSIP_SQUIRE_ITEM_2 "How do the Argent Crusader raiders fight?"
+#define GOSSIP_SQUIRE_ITEM_1 "Estoy preparado para luchar"
+//#define GOSSIP_SQUIRE_ITEM_2 "How do the Argent Crusader raiders fight?"
 
 class npc_squire_david : public CreatureScript
 {
-public:
+	public:
     npc_squire_david() : CreatureScript("npc_squire_david") { }
+	
+    struct npc_squire_davidAI : public ScriptedAI
+    {
+        npc_squire_davidAI(Creature* creature) : ScriptedAI(creature) { }	
+		
+		bool invocar;
 
+	    void DoAction(int32 const action)
+        {
+            switch (action)
+            {
+                case ACTION_START_DAVID:
+					invocar = true;
+					break;
+			}
+		}		
+		
+        void UpdateAI(uint32 const diff)
+        {	
+
+				if (invocar == true)
+				{
+					if (Creature* trigger = me->SummonCreature(33448, 8575.451f, 952.472f, 547.554f, 0.38f, TEMPSUMMON_MANUAL_DESPAWN))			
+					{
+						trigger->GetMotionMaster()->MovePoint(0, 8600.79f, 963.43f, 547.55f);
+						trigger->DespawnOrUnsummon(90000);
+						me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+						invocar = false;
+					}             
+				}
+        }
+		
+        void SummonedCreatureDespawn(Creature* trigger)
+        {
+            if (trigger->GetEntry() == 33448)
+                me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+        }
+		
+		void SummonedCreatureDies(Creature* trigger, Unit* /*killer*/)
+        {
+            if (trigger->GetEntry() == 33448)
+			{
+				trigger->DespawnOrUnsummon(5000);
+				me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+			}
+        }
+			
+
+	};
+	
+    CreatureAI* GetAI(Creature* creature) const
+    {
+       return new npc_squire_davidAI(creature);
+    }
+	
     bool OnGossipHello(Player* player, Creature* creature)
     {
         if (player->GetQuestStatus(QUEST_THE_ASPIRANT_S_CHALLENGE_H) == QUEST_STATUS_INCOMPLETE ||
-            player->GetQuestStatus(QUEST_THE_ASPIRANT_S_CHALLENGE_A) == QUEST_STATUS_INCOMPLETE)//We need more info about it.
+            player->GetQuestStatus(QUEST_THE_ASPIRANT_S_CHALLENGE_A) == QUEST_STATUS_INCOMPLETE)
         {
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_SQUIRE_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_SQUIRE_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            //player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_SQUIRE_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
         }
 
         player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_SQUIRE, creature->GetGUID());
         return true;
-    }
+    }	
 
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
     {
         player->PlayerTalkClass->ClearMenus();
         if (action == GOSSIP_ACTION_INFO_DEF+1)
         {
-            player->CLOSE_GOSSIP_MENU();
-            creature->SummonCreature(NPC_ARGENT_VALIANT, 8575.451f, 952.472f, 547.554f, 0.38f);
+			player->CLOSE_GOSSIP_MENU();
+			creature->AI()->DoAction(ACTION_START_DAVID);
+        }
+        return true;
+    }
+};
+
+/*######
+## npc_squire_danny
+######*/
+
+enum eSquireDanny
+{
+    QUEST_DESAFIO_VALEROSO_CHALLENGE_HUMANO 			= 13699,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_ELFON 				= 13725,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_ENANO 				= 13713,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_GNOMO 				= 13723,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_DRAENEI		 	= 13724,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_ORCO 				= 13726,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_ELFOS 				= 13731,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_TAUREN 			= 13728,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_TROL 				= 13727,
+	QUEST_DESAFIO_VALEROSO_CHALLENGE_NOMUERTO 			= 13729,
+
+	ACTION_START_DANNY									= 1
+};
+
+//#define GOSSIP_SQUIRE_ITEM_2 "How do the Argent Crusader raiders fight?"
+
+class npc_squire_danny : public CreatureScript
+{
+	public:
+    npc_squire_danny() : CreatureScript("npc_squire_danny") { }
+	
+    struct npc_squire_dannyAI : public ScriptedAI
+    {
+        npc_squire_dannyAI(Creature* creature) : ScriptedAI(creature) { }	
+		
+		bool invocar;
+
+	    void DoAction(int32 const action)
+        {
+            switch (action)
+            {
+                case ACTION_START_DANNY:
+					invocar = true;
+					break;
+			}
+		}		
+		
+        void UpdateAI(uint32 const diff)
+        {	
+
+				if (invocar == true)
+				{
+					if (Creature* trigger = me->SummonCreature(33707, 8551.58f, 1086.58f, 556.78f, 1.64f, TEMPSUMMON_MANUAL_DESPAWN))			
+					{
+						trigger->GetMotionMaster()->MovePoint(0, 8549.79f, 1119.43f, 556.55f);
+						trigger->DespawnOrUnsummon(90000);
+						me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+						invocar = false;
+					}             
+				}
+        }
+		
+        void SummonedCreatureDespawn(Creature* trigger)
+        {
+            if (trigger->GetEntry() == 33707)
+                me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+        }
+		
+		void SummonedCreatureDies(Creature* trigger, Unit* /*killer*/)
+        {
+            if (trigger->GetEntry() == 33707)
+			{
+				trigger->DespawnOrUnsummon(5000);
+				me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+			}
+        }
+	};
+	
+    CreatureAI* GetAI(Creature* creature) const
+    {
+       return new npc_squire_dannyAI(creature);
+    }
+	
+    bool OnGossipHello(Player* player, Creature* creature)
+    {
+        if (player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_HUMANO) == QUEST_STATUS_INCOMPLETE ||
+			player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_ELFON) == QUEST_STATUS_INCOMPLETE ||
+			player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_ENANO) == QUEST_STATUS_INCOMPLETE ||
+			player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_GNOMO) == QUEST_STATUS_INCOMPLETE ||
+			player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_DRAENEI) == QUEST_STATUS_INCOMPLETE ||
+			player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_ORCO) == QUEST_STATUS_INCOMPLETE ||
+			player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_ELFOS) == QUEST_STATUS_INCOMPLETE ||
+			player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_TAUREN) == QUEST_STATUS_INCOMPLETE ||
+			player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_TROL) == QUEST_STATUS_INCOMPLETE ||
+            player->GetQuestStatus(QUEST_DESAFIO_VALEROSO_CHALLENGE_NOMUERTO) == QUEST_STATUS_INCOMPLETE)
+        {
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_SQUIRE_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            //player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_SQUIRE_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+        }
+
+        player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_SQUIRE, creature->GetGUID());
+        return true;
+    }	
+
+    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
+    {
+        player->PlayerTalkClass->ClearMenus();
+        if (action == GOSSIP_ACTION_INFO_DEF+1)
+        {
+			player->CLOSE_GOSSIP_MENU();
+			creature->AI()->DoAction(ACTION_START_DANNY);
         }
         return true;
     }
@@ -495,6 +660,7 @@ void AddSC_icecrown()
 {
     new npc_arete;
     new npc_squire_david;
+	new npc_squire_danny;
     new npc_argent_valiant;
     new npc_guardian_pavilion;
     new npc_vereth_the_cunning;
